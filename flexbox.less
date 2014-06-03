@@ -1,0 +1,249 @@
+// See http://stackoverflow.com/questions/15662578/flexible-box-model-display-flex-box-flexbox 
+// See http://caniuse.com/flexbox
+// The links above show the various supported browsers.   
+
+// PRE-HISTORY
+.pre-history-item {
+    display: inline-block; // FOR OLD BROWSERS
+	zoom: 1; // FOR OLD BROWSERS
+}
+
+// VINTAGE
+@vintage-flex-direction: horizontal; // horizontal, vertical, inline-axis, block-axis, inherit
+@vintage-flex-reverse: normal; // normal, reverse, inherit
+@vintage-flex-wrap: single; // single, multiple // With display: box; only single lines were implemented.
+@vintage-justify-content: start; // start, end, center, justify
+@vintage-align-items: start; // start, end, center, baseline, stretch
+// @vintage-align-content does not exist.  With display: box; only single lines were implemented.
+.box-container(@vintage-flex-direction: @vintage-flex-direction, @vintage-flex-reverse: @vintage-flex-reverse, @vintage-justify-content: @vintage-justify-content, @vintage-align-items: @vintage-align-items, @vintage-flex-wrap: @vintage-flex-wrap) {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-box;
+    display: box;
+
+    -webkit-box-orient: @vintage-flex-direction;
+    -moz-box-orient: @vintage-flex-direction;
+    -ms-box-orient: @vintage-flex-direction;
+    box-orient: @vintage-flex-direction;
+
+    -webkit-box-direction: @vintage-flex-reverse;
+    -moz-box-direction: @vintage-flex-reverse;
+    -ms-box-direction: @vintage-flex-reverse;
+    box-direction: @vintage-flex-reverse;
+
+    -webkit-box-pack: @vintage-justify-content;
+    -moz-box-pack: @vintage-justify-content;
+    -ms-box-pack: @vintage-justify-content;
+    box-pack: @vintage-justify-content;
+
+    -webkit-box-align: @vintage-align-items;
+    -moz-box-align: @vintage-align-items;
+    -ms-box-align: @vintage-align-items;
+    box-align: @vintage-align-items;
+
+    -webkit-box-lines: @vintage-flex-wrap;
+    -moz-box-lines: @vintage-flex-wrap;
+    -ms-box-lines: @vintage-flex-wrap;
+    box-lines: @vintage-flex-wrap;
+
+    width: 100%; // for vintage box model, it requires that a width be set to in order for the child elements to justify correctly
+}
+
+@vintage-flex: 1.0; // default = 0.0, firefox < 22 require that a width also be set for the flex to work correctly in some cases.
+@vintage-align-self: start; // start, end, center, baseline, stretch // This does not work, individually aligning items is not valid with display: box;
+@vintage-order: 1; // default = 1
+@vintage-group: 1; // default = 1
+.box-item(@vintage-flex: @vintage-flex, @vintage-align-self: @vintage-align-self, @vintage-order: @vintage-order, @vintage-group: @vintage-group) {
+    -webkit-box-flex: @vintage-flex;
+    -moz-box-flex: @vintage-flex;
+    -ms-box-flex: @vintage-flex;
+    box-flex: @vintage-flex;
+
+    -webkit-box-align: @vintage-align-self;
+    -moz-box-align: @vintage-align-self;
+    -ms-box-align: @vintage-align-self;
+    box-align: @vintage-align-self;
+
+    -webkit-box-ordinal-group: @vintage-order;
+    -moz-box-ordinal-group: @vintage-order;
+    -ms-box-ordinal-group: @vintage-order;
+    box-ordinal-group: @vintage-order;
+
+    -webkit-box-flex-group: @vintage-group;
+    -moz-box-flex-group: @vintage-group;
+    -ms-box-flex-group: @vintage-group;
+    box-flex-group: @vintage-group;
+}
+
+// LEGACY - display: flexbox;
+@legacy-flex-direction: row; // row, row-reverse, column, column-reverse
+@legacy-flex-wrap: ~''; // wrap, wrap-reverse, the default is empty (~'')
+@legacy-justify-content: start; // start, end, center, justify
+@legacy-align-items: start; // start, end, center, baseline, stretch
+@legacy-align-content: justify; // start, end, center, justify
+// http://msdn.microsoft.com/en-us/library/windows/apps/hh996825.aspx
+.flexbox-container(@legacy-flex-flow: @legacy-flex-direction @legacy-flex-wrap, @legacy-justify-content: @legacy-justify-content, @legacy-align-items: @legacy-align-items, @legacy-align-content: @legacy-align-content) {
+    display: -webkit-flexbox;
+    display: -moz-flexbox;
+    display: -ms-flexbox;
+    display: flexbox;
+
+    -webkit-flex-flow: @legacy-flex-flow;
+    -moz-flex-flow: @legacy-flex-flow;
+    -ms-flex-flow: @legacy-flex-flow;
+    flex-flow: @legacy-flex-flow;
+
+    -webkit-flex-pack: @legacy-justify-content;
+    -moz-flex-pack: @legacy-justify-content;
+    -ms-flex-pack: @legacy-justify-content;
+    flex-pack: @legacy-justify-content;
+
+    -webkit-flex-align: @legacy-align-items;
+    -moz-flex-align: @legacy-align-items;
+    -ms-flex-align: @legacy-align-items;
+    flex-align: @legacy-align-items;
+
+    -webkit-flex-line-pack: @legacy-align-content;
+    -moz-flex-line-pack: @legacy-align-content;
+    -ms-flex-line-pack: @legacy-align-content;
+    flex-line-pack: @legacy-align-content;
+}
+
+@legacy-flex-grow: 0;
+@legacy-flex-shrink: 1;
+@legacy-flex-basis: auto; // in ie if the flex bases is not set and the items are aligned in a column then the container will not be the right size.
+@legacy-align-self: auto;
+@legacy-order: 0;
+.flexbox-item(@legacy-flex: @legacy-flex-grow @legacy-flex-shrink @legacy-flex-basis, @legacy-align-self: @legacy-align-self, @legacy-order: @legacy-order) {
+    -webkit-flex-item-align: @legacy-align-self;
+    -moz-flex-item-align: @legacy-align-self;
+    -ms-flex-item-align: @legacy-align-self;
+    flex-item-align: @legacy-align-self;
+
+    -webkit-flex-order: @legacy-order;
+    -moz-flex-order: @legacy-order;
+    -ms-flex-order: @legacy-order;
+    flex-order: @legacy-order;
+
+    -webkit-flex: @legacy-flex;
+    -moz-flex: @legacy-flex;
+    -ms-flex: @legacy-flex;
+    flex: @legacy-flex;
+
+    height: flex(@legacy-flex);
+    width: flex(@legacy-flex);
+}
+
+// MODERN - display: flex;
+// RPNOTE: flex-flow IS NOT SUPPORTED IN FF22+ EVEN THOUGH IT DOES SUPPORT THE NEW FLEXIBLE LAYOUT MODEL, USE .flex-container(2) // See https://developer.mozilla.org/en-US/docs/Web/CSS/flex-flow?redirectlocale=en-US&redirectslug=CSS%2Fflex-flow
+// See http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#property
+@flex-direction: row;
+@flex-wrap: no-wrap;
+@justify-content: flex-start;
+@align-items: flex-start;
+@align-content: stretch;
+.flex-container(1, @flex-flow: @flex-direction @flex-wrap, @justify-content: @justify-content, @align-items: @align-items, @align-content: @align-content) {
+    -webkit-flex-flow: @flex-flow;
+    -moz-flex-flow: @flex-flow;
+    -ms-flex-flow: @flex-flow;
+    flex-flow: @flex-flow;
+
+    .flex-container-helper(@justify-content, @align-items, @align-content);
+}
+
+.flex-container(2, @flex-direction: @flex-direction, @flex-wrap: @flex-wrap, @justify-content: @justify-content, @align-items: @align-items, @align-content: @align-content) {
+    -webkit-flex-direction: @flex-direction;
+    -moz-flex-direction: @flex-direction;
+    -ms-flex-direction: @flex-direction;
+    flex-direction: @flex-direction;
+
+    -ms-flex-wrap: @flex-wrap;
+    -moz-flex-wrap: @flex-wrap;
+    -webkit-flex-wrap: @flex-wrap;
+    flex-wrap: @flex-wrap;
+
+    .flex-container-helper(@justify-content, @align-items, @align-content);
+}
+
+// THIS SHOULD ONLY BE CALLED BY .flex-container
+.flex-container-helper(@justify-content: @justify-content, @align-items: @align-items, @align-content: @align-content) {
+    display: -webkit-flex;
+    display: -moz-flex; // https://developer.mozilla.org/en-US/docs/CSS/Tutorials/Using_CSS_flexible_boxes, [2] Firefox supports only single-line flexbox. To activate flexbox support, the user has to change the about:config preference "layout.css.flexbox.enabled" to true.
+    display: -ms-flex;
+    display: flex;
+
+    -webkit-justify-content: @justify-content;
+    -moz-justify-content: @justify-content;
+    -ms-justify-content: @justify-content;
+    justify-content: @justify-content;
+
+    -webkit-align-items: @align-items;
+    -moz-align-items: @align-items;
+    -ms-align-items: @align-items;
+    align-items: @align-items;
+
+    -webkit-align-content: @align-content;
+    -moz-align-content: @align-content;
+    -ms-align-content: @align-content;
+    align-content: @align-content;
+}
+
+// See http://www.w3.org/TR/2012/CR-css3-flexbox-20120918/#property
+@flex-grow: 0;
+@flex-shrink: 1;
+@flex-basis: auto;
+@align-self: auto;
+@order: 0;
+.flex-item(1, @flex: @flex-grow @flex-shrink @flex-basis, @align-self: @align-self, @order: @order) {
+    -webkit-flex: @flex;
+    -moz-flex: @flex;
+    -ms-flex: @flex;
+    flex: @flex;
+
+    .flex-item-helper(@align-self, @order);
+}
+
+.flex-item(2, @flex-grow: @flex-grow, @flex-shrink: @flex-shrink, @flex-basis: @flex-basis, @align-self: @align-self, @order: @order) {
+    -webkit-flex-grow: @flex-grow;
+    -moz-flex-grow: @flex-grow;
+    -ms-flex-grow: @flex-grow;
+    flex-grow: @flex-grow;
+
+    -webkit-flex-shrink: @flex-shrink;
+    -moz-flex-shrink: @flex-shrink;
+    -ms-flex-shrink: @flex-shrink;
+    flex-shrink: @flex-shrink;
+
+    -webkit-flex-basis: @flex-basis;
+    -moz-flex-basis: @flex-basis;
+    -ms-flex-basis: @flex-basis;
+    flex-basis: @flex-basis;
+
+    .flex-item-helper(@align-self, @order);
+}
+
+// THIS SHOULD ONLY BE CALLED BY .flex-item
+.flex-item-helper(@align-self: @align-self, @order: @order) {
+    -webkit-align-self: @align-self;
+    -moz-align-self: @align-self;
+    -ms-align-self: @align-self;
+    align-self: @align-self;
+
+    -webkit-order: @order;
+    -moz-order: @order;
+    -ms-order: @order;
+    order: @order;
+}
+
+// ALL-IN-ONE
+.flex-container-all-in-one(@flex-direction: @flex-direction, @flex-wrap: @flex-wrap, @justify-content: @justify-content, @align-items: @align-items, @align-content: @align-content, @legacy-flex-flow: @legacy-flex-direction @legacy-flex-wrap, @legacy-justify-content: @legacy-justify-content, @legacy-align-items: @legacy-align-items, @legacy-align-content: @legacy-align-content, @vintage-flex-direction: @vintage-flex-direction, @vintage-flex-reverse: @vintage-flex-reverse, @vintage-justify-content: @vintage-justify-content, @vintage-align-items: @vintage-align-items, @vintage-flex-wrap: @vintage-flex-wrap) {
+    .box-container(@vintage-flex-direction, @vintage-flex-reverse, @vintage-justify-content, @vintage-align-items, @vintage-flex-wrap);
+    .flexbox-container(@legacy-flex-flow, @legacy-justify-content, @legacy-align-items, @legacy-align-content);
+    .flex-container(2, @flex-direction, @flex-wrap, @justify-content, @align-items, @align-content);
+}
+
+.flex-item-all-in-one(@flex: @flex-grow @flex-shrink @flex-basis, @align-self: @align-self, @order: @order, @legacy-flex: @legacy-flex-grow @legacy-flex-shrink @legacy-flex-basis, @legacy-align-self: @legacy-align-self, @legacy-order: @legacy-order, @vintage-flex: @vintage-flex, @vintage-align-self: @vintage-align-self, @vintage-order: @vintage-order, @vintage-group: @vintage-group) {
+    .box-item(@vintage-flex, @vintage-align-self, @vintage-order, @vintage-group);
+    .flexbox-item(@legacy-flex, @legacy-align-self, @legacy-order);
+    .flex-item(1, @flex, @align-self, @order);
+}
